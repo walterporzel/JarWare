@@ -12,8 +12,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
 public class DemoController {
+    private boolean verify;
     @GetMapping("/sign")
     public boolean sign(@RequestBody String value) throws Exception{
+
         Signature sign = Signature.getInstance("SHA256withRSA");
 
         KeyGen keyGen = new KeyGen();
@@ -29,8 +31,8 @@ public class DemoController {
 
         sign.update(bytes);
 
-        boolean verify = sign.verify(signature);
+        this.verify = sign.verify(signature);
 
-        return verify;
+        return this.verify;
     }
 }
