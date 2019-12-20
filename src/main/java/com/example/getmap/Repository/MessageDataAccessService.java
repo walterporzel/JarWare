@@ -3,6 +3,10 @@ package com.example.getmap.Repository;
 import com.example.getmap.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -22,6 +26,8 @@ public class MessageDataAccessService implements MessageDao {
 
     @Override
     public int insertMessage(UUID id, Message message) {
+        final String sql = "INSERT INTO message (id, message) VALUES (uuid_generate_v4(), '" + message.getMessage() + "');";
+        jdbcTemplate.update(sql);
         return 0;
     }
 
@@ -48,11 +54,15 @@ public class MessageDataAccessService implements MessageDao {
 
     @Override
     public int deleteMessageByID(UUID id) {
+        final String sql = "DELETE FROM message WHERE id='"+id+"';";
+        jdbcTemplate.update(sql);
         return 0;
     }
 
     @Override
     public int updateMessageById(UUID id, Message message) {
+        final String sql = "UPDATE message SET message = '"+message.getMessage()+"' WHERE id = '"+id+"';";
+        jdbcTemplate.update(sql);
         return 0;
     }
 }
