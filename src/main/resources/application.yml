@@ -1,8 +1,13 @@
 server:
   port : 8001
 app:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     jdbc-url: jdbc:postgresql://localhost:5432/demo
     username: postgres
     password: password
     pool-size: 30
+    driverClassName: org.postgresql.Driver

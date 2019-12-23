@@ -1,25 +1,32 @@
 package com.example.getmap.Repository;
 
 import com.example.getmap.model.Message;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface MessageDao {
+@Repository
+public interface MessageDao extends JpaRepository<Message, UUID>{
 
-    int insertMessage(UUID id, Message message);
+    Message findMessageById(UUID id);
 
-    default int insertMessage(Message message){
-        UUID id = UUID.randomUUID();
-        return insertMessage(id, message);
-    }
 
-    List<Message> selectAllMessages();
+    //int insertMessage(UUID id, Message message);
 
-    Optional<Message> selectMessageById(UUID id);
+//    default int insertMessage(Message message){
+////        UUID id = UUID.randomUUID();
+////        return insertMessage(id, message);
+////    }
 
-    int deleteMessageByID(UUID id);
+    //List<Message> selectAllMessages();
 
-    int updateMessageById(UUID id, Message message);
+    //Optional<Message> selectMessageById(UUID id);
+
+    //int deleteMessageById(UUID id);
+
+    //int updateMessageById(UUID id, Message message);
 }

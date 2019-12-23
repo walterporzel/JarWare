@@ -1,5 +1,6 @@
 package com.example.getmap.controller;
 
+import com.example.getmap.Repository.MessageDao;
 import com.example.getmap.model.Message;
 import com.example.getmap.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,10 @@ import java.util.UUID;
 @RestController
 public class MessageController {
 
+    @Autowired
+    private MessageDao messageDao;
+
+    @Autowired
     private final MessageService messageService;
 
     @Autowired
@@ -33,8 +38,9 @@ public class MessageController {
 
     @GetMapping(path = "{id}")
     public Message getMessageById(@PathVariable("id") UUID id) {
-        return messageService.getMessageById(id)
-                .orElse(null);
+//        return messageService.getMessageById(id)
+//                .orElse(null);
+              return messageService.getMessageById(id);
     }
 
     @DeleteMapping(path = "{id}")
@@ -44,7 +50,7 @@ public class MessageController {
 
     @PutMapping(path = "{id}")
     public void updateMessage(@PathVariable("id") UUID id, @Valid @NonNull @RequestBody Message messageToUpdate){
-        messageService.updateMessage(id, messageToUpdate);
+        messageService.updateMessage(id, messageToUpdate.getMessage());
     }
 
 }

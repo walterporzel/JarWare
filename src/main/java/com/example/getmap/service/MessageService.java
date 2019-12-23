@@ -13,30 +13,36 @@ import java.util.UUID;
 @Service
 public class MessageService {
 
+    @Autowired
     private final MessageDao messageDao;
 
+
+    //@Qualifier("postgres")
     @Autowired
-    public MessageService(@Qualifier("postgres") MessageDao messageDao) {
+    public MessageService( MessageDao messageDao) {
         this.messageDao = messageDao;
     }
 
-    public int addMessage(Message message){
-        return messageDao.insertMessage(message);
+    public Message addMessage(Message message){
+        return messageDao.save(message);
     }
 
     public List<Message> getAllMessages() {
-        return messageDao.selectAllMessages();
+        return messageDao.findAll();
     }
 
-    public Optional<Message> getMessageById(UUID id){
-        return messageDao.selectMessageById(id);
+    public Message getMessageById(UUID id){
+        return messageDao.findMessageById(id);
     }
 
-    public int deleteMessage(UUID id){
-        return messageDao.deleteMessageByID(id);
+    public void deleteMessage(UUID id){
+        messageDao.deleteById(id);
     }
 
-    public int updateMessage(UUID id, Message newMessage){
-        return messageDao.updateMessageById(id, newMessage);
+    public void updateMessage(UUID id, String newMessage){
+        //return messageDao.saveAndFlush(newMessage);
+        Message old = messageDao.findMessageById(id);
+        old.setMessage(newMessage);
+        messageDao.save(old);
     }
 }
