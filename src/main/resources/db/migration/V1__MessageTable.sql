@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS message;
 CREATE TABLE message (
     id UUID NOT NULL PRIMARY KEY,
     message VARCHAR(100) NOT NULL
